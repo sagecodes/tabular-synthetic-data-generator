@@ -9,7 +9,7 @@ iris = load_iris()
 feature_names = iris.feature_names
 target_names = iris.target_names
 
-def create_data(feature_names, target_names, std_mod=0):
+def create_data(feature_names, target_names, num_rows=50, std_mod=0):
     '''
     Create synthetic data using the mean and standard deviation of the real data.
     The synthetic data will be normally distributed with the same mean and standard deviation as the real data.
@@ -21,6 +21,8 @@ def create_data(feature_names, target_names, std_mod=0):
         A list of the feature names
     target_names : list
         A list of the target names
+    num_rows : int, optional
+        The number of rows to generate for each target class. The default is 50.
     std_mod : float, optional
         The standard deviation modifier. The default is 0.
 
@@ -48,10 +50,10 @@ def create_data(feature_names, target_names, std_mod=0):
         # divide std for lower variation. Multiply for more?
         synthetic_data.append(np.random.normal(loc=feature_means, 
                                             scale=feature_stds*std_mod, 
-                                            size=(50, 4)))
+                                            size=(num_rows, 4)))
         
         # Assign the target value for this synthetic data
-        synthetic_targets.append([target_name]*50)
+        synthetic_targets.append([target_name]*num_rows)
         print(f'name: {target_name} - mean: {feature_means} - std: {feature_stds}')
 
     # Combine the synthetic data for each target class into a single array and shuffle the rows
